@@ -5,7 +5,7 @@ const ticketControl = new TicketControl();
 const socketController = (socket) =>{
 
         socket.emit('last-ticket', ticketControl.last );
-        socket.emit('actual-status', ticketControl.last4)
+        socket.emit('actual-status', ticketControl.last4);
 
         //console.log('Client Connected', socket.id);
         
@@ -33,6 +33,7 @@ const socketController = (socket) =>{
             }
 
             const ticket = ticketControl.attendTicket( desktop );
+            socket.broadcast.emit('actual-status', ticketControl.last4)
             console.log(ticket);
             
             if(!ticket){
