@@ -1,4 +1,4 @@
-# Basic Socket Server
+# Socket Queue App Server
 
  ![ezgif-3-4d3e7ce695](https://user-images.githubusercontent.com/51382458/204625544-c390dd2b-c2ef-4861-8363-6ef9f0f8b055.gif)
 
