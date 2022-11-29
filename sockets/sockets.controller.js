@@ -5,6 +5,7 @@ const ticketControl = new TicketControl();
 const socketController = (socket) =>{
 
         socket.emit('last-ticket', ticketControl.last );
+        socket.emit('actual-status', ticketControl.last4)
 
         //console.log('Client Connected', socket.id);
         
@@ -21,6 +22,33 @@ const socketController = (socket) =>{
             //TODO: notificar que hay un nuevo ticket pendiente de asignar
 
         })
+
+        socket.on('attend-ticket', ({desktop}, callback) => {
+ 
+            if (!desktop){
+                return callback({
+                    ok: false,
+                    msg: 'Desktop is required'
+                });
+            }
+
+            const ticket = ticketControl.attendTicket( desktop );
+            console.log(ticket);
+            
+            if(!ticket){
+                callback({
+                    ok: false,
+                    msg: 'There is no pending tickets'
+                })
+            }else{
+                callback({
+                    ok: true,
+                    ticket
+                })
+            }
+
+            
+        });
 
 
 }

@@ -6,22 +6,16 @@ const btnCreate = document.querySelector('button')
 //socket del cliente / Navegador!
 const socket = io();
 
-socket.on('connect', () =>{ 
-    //console.log('Connected'); 
- 
+socket.on('connect', () =>{   
     btnCreate.disabled = false;
 });
 
-socket.on('disconnect', () =>{ 
-    //console.log('Disconnected from Server');
-    
+socket.on('disconnect', () =>{   
     btnCreate.disabled = true;
 });
-
-//A PESAR DE QUE SE LLAME SEND-MSG, ESTE SERA UN EVENTO DE ESCUCHA AL SERVIDOR
+ 
 socket.on('last-ticket', (lastTicket) => {
-    lblNewTicket.innerText = 'Ticket ' + lastTicket;
-    
+    lblNewTicket.innerText = 'Ticket ' + lastTicket; 
 });
 
 btnCreate.addEventListener('click', () =>{

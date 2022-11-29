@@ -65,8 +65,9 @@ class TicketControl {
         // const ticket = this.tickets[0];
         // this.tickets.shift(); //remueve el primer elemento y lo retorna
         const ticket = this.tickets.shift();
+        ticket.desktop = desktop;
 
-        ticket.last4.unshift( ticket ); // añade elemento nuevo al inicio
+        this.last4.unshift( ticket ); // añade elemento nuevo al inicio
 
         if ( this.last4.length > 4){
             this.last4.splice(-1, 1); //pos -1 y elimina 1
