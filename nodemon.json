@@ -1,0 +1,5 @@
+{
+    "_comment": "si hay un cambio en este lugar no quiero que se reinicialize el server",
+    "ignore": ["db/*.json"]
+}
+ 

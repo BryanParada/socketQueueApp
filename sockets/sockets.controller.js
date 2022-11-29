@@ -4,6 +4,8 @@ const ticketControl = new TicketControl();
 
 const socketController = (socket) =>{
 
+        socket.emit('last-ticket', ticketControl.last );
+
         //console.log('Client Connected', socket.id);
         
         socket.on('disconnect', () =>{
@@ -11,14 +13,13 @@ const socketController = (socket) =>{
         })
         
         //ESCUCHANDO CUANDO CLIENTE LO EMITE
-        socket.on('send-msg', (payload, callback) => {
-            //console.log(payload);
+        socket.on('next-ticket', (payload, callback) => {
+          
+            const next = ticketControl.next();
+            callback(next);
 
-            const id = 123456;
-            callback({ id, date: new Date().getTime() });
-            //CUANDO EL SERVIDOR DE SOCKETS LO ENVIA
-            socket.broadcast.emit('send-msg', payload);
-            
+            //TODO: notificar que hay un nuevo ticket pendiente de asignar
+
         })
 
 

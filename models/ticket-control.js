@@ -50,7 +50,7 @@ class TicketControl {
     next(){
         this.last += 1;
         const ticket = new Ticket( this.last, null);
-        this.ticket.push( ticket );
+        this.tickets.push( ticket );
 
         this.saveDB();
         return 'Ticket ' + ticket.number;
