@@ -3,9 +3,10 @@ const { TicketControl } = require("../models/ticket-control");
 const ticketControl = new TicketControl();
 
 const socketController = (socket) =>{
-
+        //cuando un cliente se conecta
         socket.emit('last-ticket', ticketControl.last );
         socket.emit('actual-status', ticketControl.last4);
+        socket.emit('pending-tickets', ticketControl.tickets.length);
 
         //console.log('Client Connected', socket.id);
         
@@ -16,11 +17,9 @@ const socketController = (socket) =>{
         //ESCUCHANDO CUANDO CLIENTE LO EMITE
         socket.on('next-ticket', (payload, callback) => {
           
-            const next = ticketControl.next();
-            callback(next);
-
-            //TODO: notificar que hay un nuevo ticket pendiente de asignar
-
+            const nextTicket = ticketControl.nextTicket();
+            callback(nextTicket);
+            socket.broadcast.emit('pending-tickets', ticketControl.tickets.length);  
         })
 
         socket.on('attend-ticket', ({desktop}, callback) => {
@@ -30,11 +29,15 @@ const socketController = (socket) =>{
                     ok: false,
                     msg: 'Desktop is required'
                 });
-            }
+            } 
 
             const ticket = ticketControl.attendTicket( desktop );
             socket.broadcast.emit('actual-status', ticketControl.last4)
-            console.log(ticket);
+
+            socket.emit('pending-tickets', ticketControl.tickets.length);
+            socket.broadcast.emit('pending-tickets', ticketControl.tickets.length);
+
+            //console.log(ticket);
             
             if(!ticket){
                 callback({

@@ -47,7 +47,7 @@ class TicketControl {
         fs.writeFileSync(dbPath, JSON.stringify( this.toJson ));
     }
 
-    next(){
+    nextTicket(){
         this.last += 1;
         const ticket = new Ticket( this.last, null);
         this.tickets.push( ticket );
@@ -58,13 +58,16 @@ class TicketControl {
 
     attendTicket( desktop){
         // no tenemos tickets
+        console.log(this.tickets);
         if (this.tickets.length === 0){
             return null;
         }
-
+        
         // const ticket = this.tickets[0];
         // this.tickets.shift(); //remueve el primer elemento y lo retorna
         const ticket = this.tickets.shift();
+        
+        
         ticket.desktop = desktop;
 
         this.last4.unshift( ticket ); // añade elemento nuevo al inicio
